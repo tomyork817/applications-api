@@ -1,3 +1,3 @@
-namespace Infrastructure.DataAccess;
+namespace Application;
 
 internal interface IAssemblyMarker { }

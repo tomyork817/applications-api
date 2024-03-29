@@ -2,17 +2,21 @@ namespace Domain.Applications;
 
 public class SubmittedApplication : IEquatable<SubmittedApplication>
 {
+    public SubmittedApplication() { }
+    
     public SubmittedApplication(
         Guid id,
         Guid userId,
         string name,
         string? description,
-        string plan)
+        string plan, 
+        DateTime createdDateTime)
     {
         Id = id;
         UserId = userId;
         Name = name;
         Plan = plan;
+        CreatedDateTime = createdDateTime;
         Description = description;
     }
 
@@ -22,6 +26,7 @@ public class SubmittedApplication : IEquatable<SubmittedApplication>
     public string Name { get; set; }
     public string? Description { get; set; }
     public string Plan { get; set; }
+    public DateTime CreatedDateTime { get; }
 
     public bool Equals(SubmittedApplication? other) => other?.Id.Equals(Id) ?? false;
 

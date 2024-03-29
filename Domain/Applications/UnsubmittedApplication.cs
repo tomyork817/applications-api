@@ -2,13 +2,16 @@ namespace Domain.Applications;
 
 public class UnsubmittedApplication : IEquatable<UnsubmittedApplication>
 {
+    public UnsubmittedApplication() { }
+        
     public UnsubmittedApplication(
         Guid id,
         Guid userId,
         ApplicationActivity? activity,
         string? name,
         string? description,
-        string? plan)
+        string? plan, 
+        DateTime createdDateTime)
     {
         Id = id;
         UserId = userId;
@@ -16,6 +19,7 @@ public class UnsubmittedApplication : IEquatable<UnsubmittedApplication>
         Name = name;
         Description = description;
         Plan = plan;
+        CreatedDateTime = createdDateTime;
     }
 
     public Guid Id { get; }
@@ -24,6 +28,7 @@ public class UnsubmittedApplication : IEquatable<UnsubmittedApplication>
     public string? Name { get; set; }
     public string? Description { get; set; }
     public string? Plan { get; set; }
+    public DateTime CreatedDateTime { get; }
 
     public bool Equals(UnsubmittedApplication? other) => other?.Id.Equals(Id) ?? false;
 

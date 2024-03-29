@@ -2,6 +2,8 @@ namespace Domain.Applications;
 
 public class ApplicationActivity : IEquatable<ApplicationActivity>
 {
+    public ApplicationActivity() { }
+
     public ApplicationActivity(Guid id, string name, string description)
     {
         Id = id;

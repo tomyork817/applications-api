@@ -37,4 +37,21 @@ public class ApplicationsController : ControllerBase
             _ => BadRequest()
         };
     }
+
+    [HttpPut("{applicationId:guid}")]
+    public async Task<ActionResult<UnsubmittedApplicationDto>> UpdateAsync(
+        Guid applicationId,
+        [FromBody] UpdateApplicationModel model)
+    {
+        var command =
+            new UpdateApplication.Command(applicationId, model.Activity, model.Name, model.Description, model.Outline);
+        var response = await _mediator.Send(command, CancellationToken);
+
+        return response switch
+        {
+            UpdateApplication.Success result => Ok(JsonConvert.SerializeObject(result.Application, _jsonSettings)),
+            UpdateApplication.Failed result => BadRequest(result.Error),
+            _ => BadRequest()
+        };
+    }
 }

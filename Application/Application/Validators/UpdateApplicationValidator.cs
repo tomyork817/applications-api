@@ -4,11 +4,11 @@ using FluentValidation;
 
 namespace Application.Validators;
 
-public class CreateApplicationValidator : AbstractValidator<CreateApplication.Command>
+public class UpdateApplicationValidator : AbstractValidator<UpdateApplication.Command>
 {
-    public CreateApplicationValidator()
+    public UpdateApplicationValidator()
     {
-        RuleFor(x => x.Author)
+        RuleFor(x => x.Id)
             .NotEmpty();
         
         RuleFor(x => x.Name)
@@ -23,5 +23,5 @@ public class CreateApplicationValidator : AbstractValidator<CreateApplication.Co
         RuleFor(x => x)
             .Must(x => x.Name is not null || x.Description is not null || x.Outline is not null || x.Activity is not null)
             .WithMessage("Not all required fields are filled in application to submit");
-    }
+    }   
 }

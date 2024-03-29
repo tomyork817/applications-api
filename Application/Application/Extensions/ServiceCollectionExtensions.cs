@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
     {
         collection.AddMediatR(typeof(IAssemblyMarker));
         collection.AddScoped<IValidator<CreateApplication.Command>, CreateApplicationValidator>();
+        collection.AddScoped<IValidator<UpdateApplication.Command>, UpdateApplicationValidator>();
         
         return collection;
     }

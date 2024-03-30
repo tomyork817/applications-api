@@ -60,7 +60,7 @@ public class UpdateApplicationHandler : IRequestHandler<Command, Response>
         }
         catch (DbUpdateException e)
         {
-            return new Failed("Error while changing application in   database");
+            return new Failed("Error while changing application in database");
         }
         
         return new Success(application.AsDto());

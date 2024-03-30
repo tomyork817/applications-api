@@ -54,4 +54,18 @@ public class ApplicationsController : ControllerBase
             _ => BadRequest()
         };
     }
+
+    [HttpDelete("{applicationId:guid}")]
+    public async Task<ActionResult<UnsubmittedApplicationDto>> DeleteAsync(Guid applicationId)
+    {
+        var command = new DeleteApplication.Command(applicationId);
+        var response = await _mediator.Send(command, CancellationToken);
+
+        return response switch
+        {
+            DeleteApplication.Success result => Ok(result.Message),
+            DeleteApplication.Failed result => BadRequest(result.Error),
+            _ => BadRequest()
+        };
+    }
 }

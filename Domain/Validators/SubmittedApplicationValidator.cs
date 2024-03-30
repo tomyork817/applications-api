@@ -16,6 +16,9 @@ public class SubmittedApplicationValidator : AbstractValidator<SubmittedApplicat
         
         RuleFor(x => x.UserId)
             .NotEmpty();
+
+        RuleFor(x => x.Activity)
+            .NotEmpty();
         
         RuleFor(x => x.Name)
             .NotEmpty()

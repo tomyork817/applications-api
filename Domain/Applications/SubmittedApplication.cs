@@ -2,14 +2,17 @@ namespace Domain.Applications;
 
 public class SubmittedApplication : IEquatable<SubmittedApplication>
 {
-    public SubmittedApplication() { }
-    
+    public SubmittedApplication()
+    {
+    }
+
     public SubmittedApplication(
         Guid id,
         Guid userId,
+        ApplicationActivity activity,
         string name,
         string? description,
-        string plan, 
+        string plan,
         DateTime createdDateTime)
     {
         Id = id;
@@ -17,12 +20,13 @@ public class SubmittedApplication : IEquatable<SubmittedApplication>
         Name = name;
         Plan = plan;
         CreatedDateTime = createdDateTime;
+        Activity = activity;
         Description = description;
     }
 
     public Guid Id { get; }
     public Guid UserId { get; }
-    public ApplicationActivity? Activity { get; set; }
+    public ApplicationActivity Activity { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
     public string Plan { get; set; }

@@ -1,6 +1,7 @@
 using Application.Abstractions.DataAccess;
 using Domain.Applications;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Infrastructure.DataAccess;
 

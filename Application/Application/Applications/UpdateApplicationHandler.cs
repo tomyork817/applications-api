@@ -28,6 +28,7 @@ public class UpdateApplicationHandler : IRequestHandler<Command, Response>
         }
         
         var application = await _databaseContext.UnsubmittedApplications
+            .Include(a => a.Activity)
             .Where(a => a.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
 

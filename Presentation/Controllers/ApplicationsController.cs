@@ -68,4 +68,18 @@ public class ApplicationsController : ControllerBase
             _ => BadRequest()
         };
     }
+    
+    [HttpPost("{applicationId:guid}/submit")]
+    public async Task<ActionResult<UnsubmittedApplicationDto>> SubmitAsync(Guid applicationId)
+    {
+        var command = new SubmitApplication.Command(applicationId);
+        var response = await _mediator.Send(command, CancellationToken);
+
+        return response switch
+        {
+            SubmitApplication.Success result => Ok(result.Message),
+            SubmitApplication.Failed result => BadRequest(result.Error),
+            _ => BadRequest()
+        };
+    }
 }

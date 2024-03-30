@@ -23,8 +23,22 @@ public class ApplicationsController : ControllerBase
 
     public CancellationToken CancellationToken => HttpContext.RequestAborted;
 
+    [HttpGet("{applicationId:guid}")]
+    public async Task<ActionResult<ApplicationDto>> GetAsync(Guid applicationId)
+    {
+        var command = new GetApplication.Command(applicationId);
+        var response = await _mediator.Send(command, CancellationToken);
+
+        return response switch
+        {
+            GetApplication.Success result => Ok(JsonConvert.SerializeObject(result.Application, _jsonSettings)),
+            GetApplication.Failed result => BadRequest(result.Error),
+            _ => BadRequest()
+        };
+    }
+
     [HttpPost]
-    public async Task<ActionResult<UnsubmittedApplicationDto>> CreateAsync([FromBody] CreateApplicationModel model)
+    public async Task<ActionResult<ApplicationDto>> CreateAsync([FromBody] CreateApplicationModel model)
     {
         var command =
             new CreateApplication.Command(model.Author, model.Activity, model.Name, model.Description, model.Outline);
@@ -39,7 +53,7 @@ public class ApplicationsController : ControllerBase
     }
 
     [HttpPut("{applicationId:guid}")]
-    public async Task<ActionResult<UnsubmittedApplicationDto>> UpdateAsync(
+    public async Task<ActionResult<ApplicationDto>> UpdateAsync(
         Guid applicationId,
         [FromBody] UpdateApplicationModel model)
     {
@@ -56,7 +70,7 @@ public class ApplicationsController : ControllerBase
     }
 
     [HttpDelete("{applicationId:guid}")]
-    public async Task<ActionResult<UnsubmittedApplicationDto>> DeleteAsync(Guid applicationId)
+    public async Task<ActionResult<string>> DeleteAsync(Guid applicationId)
     {
         var command = new DeleteApplication.Command(applicationId);
         var response = await _mediator.Send(command, CancellationToken);
@@ -68,9 +82,9 @@ public class ApplicationsController : ControllerBase
             _ => BadRequest()
         };
     }
-    
+
     [HttpPost("{applicationId:guid}/submit")]
-    public async Task<ActionResult<UnsubmittedApplicationDto>> SubmitAsync(Guid applicationId)
+    public async Task<ActionResult<string>> SubmitAsync(Guid applicationId)
     {
         var command = new SubmitApplication.Command(applicationId);
         var response = await _mediator.Send(command, CancellationToken);

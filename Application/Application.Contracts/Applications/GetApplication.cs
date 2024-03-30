@@ -3,9 +3,9 @@ using MediatR;
 
 namespace Application.Contracts.Applications;
 
-public static class CreateApplication
+public static class GetApplication
 {
-    public record struct Command(Guid? Author, string? Activity, string? Name, string? Description, string? Outline) : IRequest<Response>;
+    public record struct Command(Guid Id) : IRequest<Response>;
         
     public abstract record Response;
 

@@ -9,7 +9,7 @@ public static class UpdateApplication
         
     public abstract record Response;
 
-    public sealed record Success(UnsubmittedApplicationDto Application) : Response;
+    public sealed record Success(ApplicationDto Application) : Response;
 
     public sealed record Failed(string Error) : Response;
 }

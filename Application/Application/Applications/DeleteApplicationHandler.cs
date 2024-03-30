@@ -17,6 +17,7 @@ public class DeleteApplicationHandler : IRequestHandler<Command, Response>
     public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
     {
         var unsubmittedApplication = await _databaseContext.UnsubmittedApplications
+            .Include(a => a.Activity)
             .Where(a => a.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
         

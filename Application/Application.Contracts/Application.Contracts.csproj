@@ -16,8 +16,4 @@
       <ProjectReference Include="..\..\Application.Dto\Application.Dto.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Users\" />
-    </ItemGroup>
-
 </Project>

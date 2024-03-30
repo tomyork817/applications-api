@@ -20,31 +20,12 @@ public class DeleteApplicationHandler : IRequestHandler<Command, Response>
             .Where(a => a.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
         
-        if (unsubmittedApplication is not null)
+        if (unsubmittedApplication is null)
         {
-            _databaseContext.UnsubmittedApplications.Remove(unsubmittedApplication);
-            try
-            {
-                await _databaseContext.SaveChangesAsync(cancellationToken);
-            }
-            catch (DbUpdateException e)
-            {
-                return new Failed("Error while removing application from database");
-            }
-
-            return new Success("Ok");
-        }
-
-        var submittedApplication = await _databaseContext.SubmittedApplications
-            .Where(a => a.Id == request.Id)
-            .FirstOrDefaultAsync(cancellationToken);
-
-        if (submittedApplication is null)
-        {
-            return new Failed("No application with such id");
+            return new Failed("Application not found");
         }
         
-        _databaseContext.SubmittedApplications.Remove(submittedApplication);
+        _databaseContext.UnsubmittedApplications.Remove(unsubmittedApplication);
         try
         {
             await _databaseContext.SaveChangesAsync(cancellationToken);

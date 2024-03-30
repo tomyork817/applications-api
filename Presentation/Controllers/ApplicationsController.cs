@@ -2,6 +2,7 @@ using Application.Contracts.Activities;
 using Application.Contracts.Applications;
 using Application.Dto;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Presentation.Models.Applications;
@@ -93,6 +94,40 @@ public class ApplicationsController : ControllerBase
         {
             SubmitApplication.Success result => Ok(result.Message),
             SubmitApplication.Failed result => BadRequest(result.Error),
+            _ => BadRequest()
+        };
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ApplicationDto>>> GetSubmittedApplications(
+        [FromQuery] DateTime? submittedAfter, [FromQuery] DateTime? unsubmittedOlder)
+    {
+        if (submittedAfter is null && unsubmittedOlder is null ||
+            submittedAfter is not null && unsubmittedOlder is not null)
+        {
+            return BadRequest();
+        }
+
+        if (submittedAfter is not null)
+        {
+            var commandSubmitted = new GetSubmittedApplications.Command(submittedAfter.Value.ToUniversalTime());
+            var responseSubmitted = await _mediator.Send(commandSubmitted, CancellationToken);
+            
+            return responseSubmitted switch
+            {
+                GetSubmittedApplications.Success result => Ok(JsonConvert.SerializeObject(result.Applications, _jsonSettings)),
+                GetSubmittedApplications.Failed result => BadRequest(result.Error),
+                _ => BadRequest()
+            };
+        }
+        
+        var commandUnsubmitted = new GetUnsubmittedApplications.Command(unsubmittedOlder.Value.ToUniversalTime());
+        var responseUnsubmitted = await _mediator.Send(commandUnsubmitted, CancellationToken);
+
+        return responseUnsubmitted switch
+        {
+            GetUnsubmittedApplications.Success result => Ok(JsonConvert.SerializeObject(result.Applications, _jsonSettings)),
+            GetUnsubmittedApplications.Failed result => BadRequest(result.Error),
             _ => BadRequest()
         };
     }

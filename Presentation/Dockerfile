@@ -7,11 +7,11 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Presentation/Presentation.csproj", "Presentation/"]
 COPY ["Infrastructure.DataAccess/Infrastructure.DataAccess.csproj", "Infrastructure.DataAccess/"]
-COPY ["Application.Abstractions/Application.Abstractions.csproj", "Application.Abstractions/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
-COPY ["Application.Dto/Application.Dto.csproj", "Application.Dto/"]
 COPY ["Application/Application/Application.csproj", "Application/Application/"]
 COPY ["Application/Application.Contracts/Application.Contracts.csproj", "Application/Application.Contracts/"]
+COPY ["Application/Application.Abstractions/Application.Abstractions.csproj", "Application/Application.Abstractions/"]
+COPY ["Application/Application.Dto/Application.Dto.csproj", "Application/Application.Dto/"]
 RUN dotnet restore "Presentation/Presentation.csproj"
 RUN dotnet dev-certs https
 COPY . .

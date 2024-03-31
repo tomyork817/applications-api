@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Presentation/Dockerfile
+    command: ./wait-for-postgres.sh postgres ./applications-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80

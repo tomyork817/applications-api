@@ -6,14 +6,13 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Presentation/Presentation.csproj", "Presentation/"]
-COPY ["Infrastructure.DataAccess/Infrastructure.DataAccess.csproj", "Infrastructure.DataAccess/"]
-COPY ["Domain/Domain.csproj", "Domain/"]
-COPY ["Application/Application/Application.csproj", "Application/Application/"]
-COPY ["Application/Application.Contracts/Application.Contracts.csproj", "Application/Application.Contracts/"]
-COPY ["Application/Application.Abstractions/Application.Abstractions.csproj", "Application/Application.Abstractions/"]
 COPY ["Application/Application.Dto/Application.Dto.csproj", "Application/Application.Dto/"]
+COPY ["Application/Application/Application.csproj", "Application/Application/"]
+COPY ["Application.Abstractions/Application.Abstractions.csproj", "Application.Abstractions/"]
+COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["Application/Application.Contracts/Application.Contracts.csproj", "Application/Application.Contracts/"]
+COPY ["Infrastructure.DataAccess/Infrastructure.DataAccess.csproj", "Infrastructure.DataAccess/"]
 RUN dotnet restore "Presentation/Presentation.csproj"
-RUN dotnet dev-certs https
 COPY . .
 WORKDIR "/src/Presentation"
 RUN dotnet build "Presentation.csproj" -c $BUILD_CONFIGURATION -o /app/build

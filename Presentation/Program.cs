@@ -1,6 +1,8 @@
+using Application.Abstractions.DataAccess;
 using Application.Extensions;
 using Infrastructure.DataAccess.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,19 +13,20 @@ builder.Services.AddDataAccess(o => o.UseNpgsql(builder.Configuration.GetConnect
 builder.Services.AddJsonSettings();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Applications API", Version = "v1" })
+);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var context = scope.ServiceProvider.GetRequiredService<IDatabaseContext>();
+    context.Database.Migrate();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllers();
 

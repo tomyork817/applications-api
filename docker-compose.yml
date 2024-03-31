@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  applications-api:
+    build:
+      context: .
+      dockerfile: Presentation/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:latest
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data:z
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped

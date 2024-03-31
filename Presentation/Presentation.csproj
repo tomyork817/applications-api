@@ -30,4 +30,10 @@
       <ProjectReference Include="..\Infrastructure.DataAccess\Infrastructure.DataAccess.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
 </Project>

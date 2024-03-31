@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
     {
         collection.AddDbContext<DatabaseContext>(configuration);
         collection.AddScoped<IDatabaseContext>(x => x.GetRequiredService<DatabaseContext>());
+        
 
         return collection;
     }

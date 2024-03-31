@@ -8,9 +8,9 @@ WORKDIR /src
 COPY ["Presentation/Presentation.csproj", "Presentation/"]
 COPY ["Application/Application.Dto/Application.Dto.csproj", "Application/Application.Dto/"]
 COPY ["Application/Application/Application.csproj", "Application/Application/"]
-COPY ["Application.Abstractions/Application.Abstractions.csproj", "Application.Abstractions/"]
-COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["Application/Application.Contracts/Application.Contracts.csproj", "Application/Application.Contracts/"]
+COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["Application/Application.Abstractions/Application.Abstractions.csproj", "Application/Application.Abstractions/"]
 COPY ["Infrastructure.DataAccess/Infrastructure.DataAccess.csproj", "Infrastructure.DataAccess/"]
 RUN dotnet restore "Presentation/Presentation.csproj"
 COPY . .

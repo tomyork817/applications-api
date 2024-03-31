@@ -13,12 +13,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Application.Dto\Application.Dto.csproj" />
+      <PackageReference Include="MediatR" Version="11.1.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="11.1.0" />
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+      <ProjectReference Include="..\Application.Dto\Application.Dto.csproj" />
     </ItemGroup>
 
 </Project>
